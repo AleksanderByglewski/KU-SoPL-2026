@@ -21,8 +21,15 @@ def solve(id: str) -> int:
     Your id is passed as a string.
     Return an integer.
     """
-    digits = [c for c in id if c.isdigit()]
-    return sum(int(d) for d in digits if digits.count(d) == 1)
+    if id.endswith("-ex"):
+        id = id[:-3]
+
+    counts: dict[str, int] = {}
+    for c in id:
+        if c.isdigit():
+            counts[c] = counts.get(c, 0) + 1
+
+    return sum(int(d) for d, n in counts.items() if n == 1)
 
 
 if __name__ == "__main__":
